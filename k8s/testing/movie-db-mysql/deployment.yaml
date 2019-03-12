@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: movie-db-mysql-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: movie-db-mysql
+        env: testing
+    spec:
+      containers:
+      - name: movie-db-mysql
+        image: mysql:5.7
+        ports:
+        - name: mysql-port
+          containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: movie_db

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jskillcloud.authsvc.mapper.UserMapper">
+    <resultMap id="userMap" type="com.jskillcloud.authsvc.model.User">
+        <id property="id" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <collection property="roles" column="roleid" ofType="com.jskillcloud.authsvc.model.Role">
+            <id property="id" column="role_id" />
+            <result property="name" column="role_name" />
+        </collection>
+    </resultMap>
+
+    <sql id ="select-user-base">
+        SELECT
+        u.id as user_id,
+        u.username as username,
+        u.password as password,
+        u.created_at as created_at,
+        u.updated_at as updated_at,
+        r.id as role_id,
+        r.name as role_name
+        FROM
+        users as u,
+        roles as r,
+        user_roles as ur
+        WHERE
+        u.id = ur.user_id
+        AND
+        r.id = ur.role_id
+    </sql>
+
+    <select id="findByUsername" parameterType="string" resultMap="userMap">
+        <include refid="select-user-base" />
+        AND u.username = #{username}
+    </select>
+
+    <select id="existsByUsername" parameterType="string" resultType="boolean">
+        select exists(select 1 from users where username = #{username})
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="userMap">
+        <include refid="select-user-base" />
+        AND u.id = #{id}
+    </select>
+
+    <select id="findByIdIn" parameterType="java.util.List" resultMap="userMap">
+        <include refid="select-user-base" />
+        AND u.id in
+        <foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY u.id ASC
+    </select>
+
+    <insert id="saveUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into users(username, password)
+        values(
+                  #{user.username},
+                  #{user.password}
+              )
+    </insert>
+
+    <!--https://blog.csdn.net/yhq1913/article/details/64128441-->
+    <insert id="saveUserRole" parameterType="map">
+        insert into user_roles(
+            user_id,role_id
+        ) values
+        <foreach collection="roleIds" item="rId" separator=",">
+            (${userId},#{rId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteAll">
+        delete from user_roles;
+        delete from users;
+    </delete>
+
+</mapper>

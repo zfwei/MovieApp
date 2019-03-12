@@ -1,0 +1,80 @@
+version: '3'
+services:
+  auth-db-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=auth_db
+
+  movie-db-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=movie_db
+
+  auth-svc:
+    build: ./auth-svc
+    image: auth-svc
+    # ports:
+    #   - 8081:8081
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - DATASOURCE_URL=jdbc:mysql://auth-db-mysql:3306/auth_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      - DATASOURCE_USERNAME=root
+      - DATASOURCE_PASSWORD=root
+      - JWT_SECRET=myfancysecret
+      - SPRING_ZIPKIN_BASE_URL=http://zipkin:9411
+    depends_on:
+      - auth-db-mysql
+
+  movie-svc:
+    build: ./movie-svc
+    image: movie-svc
+    # ports:
+    #   - 8082:8082
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - DATASOURCE_URL=jdbc:mysql://movie-db-mysql:3306/movie_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      - DATASOURCE_USERNAME=root
+      - DATASOURCE_PASSWORD=root
+      - JWT_SECRET=myfancysecret
+      - SPRING_ZIPKIN_BASE_URL=http://zipkin:9411
+    depends_on:
+      - movie-db-mysql
+
+  movie-app:
+    build: 
+      context: ./movie-app
+      args:
+        app_env: test
+    image: movie-app
+    environment:
+      - PORT=8083
+      - REACT_APP_AUTH_SERVICE_URL=http://localhost:8080/api/auth_svc
+      - REACT_APP_MOVIE_SERVICE_URL=http://localhost:8080/api/movie_svc
+    # ports:
+    #   - 8083:8083
+    depends_on:
+      - auth-svc
+      - movie-svc
+
+  gateway:
+    build: ./gateway
+    image: gateway
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - AUTH_SERVICE_URL=http://auth-svc:8081
+      - MOVIE_SERVICE_URL=http://movie-svc:8082
+      - MOVIE_APP_URL=http://movie-app:8083
+      - SPRING_ZIPKIN_BASE_URL=http://zipkin:9411
+    depends_on:
+      - auth-svc
+      - movie-svc
+      - movie-app
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411

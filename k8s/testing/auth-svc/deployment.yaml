@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth-svc-deployment
+  labels:
+    app: auth-svc
+    env: testing
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-svc
+        env: testing
+    spec:
+      containers: 
+      - name: auth-svc
+        image: auth-svc
+        imagePullPolicy: Never
+        ports:
+        - name: http-port
+          containerPort: 8080
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: test
+          - name: SERVER_PORT
+            value: "8080"
+          - name: DATASOURCE_URL
+            value: jdbc:mysql://auth-db-mysql-service:3306/auth_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+          - name: DATASOURCE_USERNAME
+            value: root
+          - name: DATASOURCE_PASSWORD
+            value: root
+          - name: JWT_SECRET
+            value: myfancysecret
+          - name: SPRING_ZIPKIN_BASE_URL
+            value: http://zipkin:9411
+      initContainers:
+      - name: init-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nslookup auth-db-mysql-service; do echo waiting for mysql; sleep 2; done;']

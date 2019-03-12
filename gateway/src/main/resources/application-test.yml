@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth_svc_route
+          uri: ${AUTH_SERVICE_URL:http://auth-svc:8081}
+          predicates:
+            - Path=/api/auth_svc/**
+          filters:
+            - StripPrefix=2
+        - id: movie_svc_route
+          uri: ${MOVIE_SERVICE_URL:http://movie-svc:8082}
+          predicates:
+            - Path=/api/movie_svc/**
+          filters:
+            - StripPrefix=2
+        - id: movie_app_route
+          uri: ${MOVIE_APP_URL:http://movie-app:8083}
+          predicates:
+            - Path=/**
+
+logging:
+  level:
+    com.jskillcloud: debug

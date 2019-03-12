@@ -1,0 +1,27 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  cloud:
+    gateway:
+      routes:
+        - id: auth_svc_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth_svc/**
+          filters:
+            - StripPrefix=2
+        - id: movie_svc_route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/movie_svc/**
+          filters:
+            - StripPrefix=2
+        - id: movie_app_route
+          uri: http://localhost:8083
+          predicates:
+            - Path=/**
+
+logging:
+  level:
+    com.jskillcloud: debug

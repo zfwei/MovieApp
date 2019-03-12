@@ -1,0 +1,32 @@
+# application.yml
+spring:
+  profiles:
+    active: dev
+  application:
+    name: movie-svc
+  flyway:
+    enabled: true
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1
+
+server:
+  port: 8082
+
+mybatis:
+  mapper-locations: mapper/*.xml
+  configuration:
+    cache-enabled: true
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 3000
+
+## App Properties
+app:
+  jwtSecret: ${JWT_SECRET:JWTSuperSecretKey}
+  jwtExpirationInMs: 604800000

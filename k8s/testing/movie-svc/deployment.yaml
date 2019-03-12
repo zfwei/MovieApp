@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: movie-svc-deployment
+  labels:
+    app: movie-svc
+    env: testing
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: movie-svc
+        env: testing
+    spec:
+      containers:
+        - name: movie-svc
+          image: movie-svc
+          imagePullPolicy: Never
+          ports:
+          - name: http-port
+            containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: test
+            - name: SERVER_PORT
+              value: "8080"
+            - name: DATASOURCE_URL
+              value: jdbc:mysql://movie-db-mysql-service:3306/movie_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+            - name: DATASOURCE_USERNAME
+              value: root
+            - name: DATASOURCE_PASSWORD
+              value: root
+            - name: JWT_SECRET
+              value: myfancysecret
+            - name: SPRING_ZIPKIN_BASE_URL
+              value: http://zipkin:9411
+      initContainers:
+      - name: init-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nslookup movie-db-mysql-service; do echo waiting for mysql; sleep 2; done;']

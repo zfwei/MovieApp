@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: movie-app-deployment
+  labels:
+    app: movie-app
+    env: testing
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: movie-app
+        env: testing
+    spec:
+      containers:
+      - name: movie-app
+        image: movie-app
+        imagePullPolicy: Never
+        ports:
+        - name: http-port
+          containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: REACT_APP_AUTH_SERVICE_URL
+            value: http://localhost:31100/api/auth_svc
+          - name: REACT_APP_MOVIE_SERVICE_URL
+            value: http://localhost:31100/api/movie_svc
