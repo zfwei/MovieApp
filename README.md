@@ -8,6 +8,7 @@
 * React ~ 前端框架
 * MySQL ~ 后端存储
 * Spring Cloud Gateway ~ 微服务网关
+* Zipkin ~ 调用链监控
 * Docker Compose ~ 镜像构建和本地部署
 * Kubernetes ~ 容器调度和部署
 
