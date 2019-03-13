@@ -17,7 +17,7 @@
 * Docker Compose ~ 镜像构建和本地部署
 * Kubernetes ~ 容器调度和部署
 
-![tech stack](doc/img/techstack.png)
+![tech stack](doc/img/techstack.jpg)
 
 ## 目录结构
 * /auth-svc : 用户注册认证服务
