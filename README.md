@@ -1,9 +1,10 @@
 # MovieApp
-一个简单的全栈微服务演示案例，教学演示用。
+一个简单的全栈微服务样例，教学演示用。
 
 ## 技术栈
 * Spring Boot ～ 开发框架
 * Spring Security ～ 安全框架
+* MyBatis ~ ORM框架
 * JWT ~ 令牌框架
 * React ~ 前端框架
 * MySQL ~ 后端存储
