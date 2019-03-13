@@ -1,6 +1,10 @@
 # MovieApp
 一个简单的全栈微服务样例，教学演示用。
 
+## 架构
+
+![architecture](doc/img/architecture.png)
+
 ## 技术栈
 * Spring Boot ～ 开发框架
 * Spring Security ～ 安全框架
@@ -12,6 +16,8 @@
 * Zipkin ~ 调用链监控
 * Docker Compose ~ 镜像构建和本地部署
 * Kubernetes ~ 容器调度和部署
+
+![tech stack](doc/img/techstack.png)
 
 ## 目录结构
 * /auth-svc : 用户注册认证服务
