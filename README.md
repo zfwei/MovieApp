@@ -1,4 +1,4 @@
-项目背景和架构
+微服务和云原生架构实践～使用Spring Boot + JWT + React + Docker/Kubernetes
 ===
 
 ## 介绍
@@ -70,7 +70,7 @@ MovieApp是应用前端，是由**React**开发的纯HTML/JS页面，MovieApp通
 本项目代码开源在github上，地址: https://github.com/jskillcloud/MovieApp
 
 * /auth-svc/ : 用户注册认证服务，Spring Boot + Maven项目
-* /gateway/ : 网关服务，Spring Boot项目
+* /gateway/ : 网关服务，Spring Boot + Maven项目
 * /k8s/testing/ : k8s部署文件for测试环境
 * /movie-app/ : 前端React项目
 * /movie-svc/ : Movie存取服务，Spring Boot + Maven项目
