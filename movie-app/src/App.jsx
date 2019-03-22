@@ -12,7 +12,8 @@ import FlashMessages from './components/FlashMessages';
 import NotFound from './components/NotFound';
 import SavedMovies from './components/SavedMovies';
 
-const API_URL = 'http://www.omdbapi.com/?apikey=c5a8df09&s='; // sample
+// const API_URL = 'http://www.omdbapi.com/?apikey=c5a8df09&s='; // sample
+const API_URL = process.env.REACT_APP_OMDB_API_URL + '/?apikey=c5a8df09&s=';
 const USERS_SERVICE_URL = process.env.REACT_APP_AUTH_SERVICE_URL;
 const MOVIES_SERVICE_URL = process.env.REACT_APP_MOVIE_SERVICE_URL;
 
