@@ -14,6 +14,12 @@ spring:
             - Path=/api/movie_svc/**
           filters:
             - StripPrefix=2
+        - id: omdb_api_route
+          uri: http://www.omdbapi.com
+          predicates:
+            - Path=/api/omdb_api/**
+          filters:
+            - StripPrefix=2
         - id: movie_app_route
           uri: ${MOVIE_APP_URL:http://movie-app:8083}
           predicates:
