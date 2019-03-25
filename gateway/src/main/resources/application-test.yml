@@ -15,7 +15,7 @@ spring:
           filters:
             - StripPrefix=2
         - id: omdb_api_route
-          uri: http://www.omdbapi.com
+          uri: ${MOVIE_APP_URL:http://www.omdbapi.com}
           predicates:
             - Path=/api/omdb_api/**
           filters:

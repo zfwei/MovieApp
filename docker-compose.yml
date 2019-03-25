@@ -52,6 +52,7 @@ services:
       - PORT=8083
       - REACT_APP_AUTH_SERVICE_URL=http://localhost:8080/api/auth_svc
       - REACT_APP_MOVIE_SERVICE_URL=http://localhost:8080/api/movie_svc
+      - REACT_APP_OMDB_API_URL=http://localhost:8080/api/omdb_api
     # ports:
     #   - 8083:8083
     depends_on:
