@@ -7,8 +7,8 @@ ENV NPM_CONFIG_LOGLEVEL warn
 ARG app_env
 ENV NODE_ENV $app_env
 
-RUN mkdir -p /movie-svc
-WORKDIR /movie-svc
+RUN mkdir -p /movie-app
+WORKDIR /movie-app
 COPY ./ ./
 
 RUN npm install
