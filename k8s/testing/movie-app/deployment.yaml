@@ -27,3 +27,5 @@ spec:
             value: http://localhost:31100/api/auth_svc
           - name: REACT_APP_MOVIE_SERVICE_URL
             value: http://localhost:31100/api/movie_svc
+          - name: REACT_APP_OMDB_API_URL
+            value: http://localhost:31100/api/omdb_api
