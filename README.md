@@ -33,6 +33,8 @@
 16. K8s部署演示
 17. 项目小结
 
+[ppt下载](doc/ppt/movie-app.pdf)
+
 ## 架构
 
 ![architecture](doc/image/arch.jpg)
