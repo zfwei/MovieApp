@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zipkin-deployment
+  labels:
+    app: zipkin
+    env: testing
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zipkin
+        env: testing
+    spec:
+      containers:
+      - name: zipkin
+        image: openzipkin/zipkin
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http-port
+          containerPort: 9411
+

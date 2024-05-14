@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-app
+  labels:
+    app: movie-app
+    env: testing
+spec:
+  selector:
+    app: movie-app
+    env: testing
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
