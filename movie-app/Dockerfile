@@ -1,4 +1,4 @@
-FROM node
+FROM node:8.17.0
 
 # if left blank app will run with dev settings
 # to build production image run:
