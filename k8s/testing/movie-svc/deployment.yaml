@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: movie-svc-deployment
@@ -6,6 +6,9 @@ metadata:
     app: movie-svc
     env: testing
 spec:
+  selector:
+    matchLabels:
+      app: movie-svc
   replicas: 1
   template:
     metadata:
